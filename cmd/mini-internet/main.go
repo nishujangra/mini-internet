@@ -47,6 +47,8 @@ func main() {
 			conn.RemoteAddr(),
 		)
 
-		conn.Close()
+		go func(c net.Conn) {
+			defer c.Close()
+		}(conn)
 	}
 }
