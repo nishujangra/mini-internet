@@ -1,6 +1,12 @@
 package models
 
-type NeighborConfig struct {
-	Address string `yaml:"address"`
-	ASN     uint32 `yaml:"asn"`
+import "net"
+
+type Neighbor struct {
+	Address string
+	ASN     uint32
+
+	Connected bool // default = false
+
+	Conn net.Conn // default = nil
 }

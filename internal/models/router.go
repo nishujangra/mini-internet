@@ -1,6 +1,12 @@
 package models
 
-type RouterConfig struct {
-	ID  string `yaml:"id"`
-	ASN uint32 `yaml:"asn"` // Autonomous System Number -> Unique number assigned to specific network
+// Runtime
+type Router struct {
+	ID       string
+	ASN      uint32
+	ListenIP string
+	Port     string
+
+	// This is runtime state, when connection is estabilished, will update the Neighbors
+	Neighbors map[string]*Neighbor
 }
