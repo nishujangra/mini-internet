@@ -1,0 +1,12 @@
+router:
+  id: 1.1.1.1
+  asn: 65001
+  listen_ip: 127.0.0.1
+  port: 5001
+
+neighbors:
+  - address: 127.0.0.1:5002
+    asn: 65002
+
+  - address: 127.0.0.1:5003
+    asn: 65003
