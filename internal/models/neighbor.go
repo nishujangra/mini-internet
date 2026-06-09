@@ -1,6 +1,8 @@
 package models
 
-import "net"
+import (
+	"net"
+)
 
 type Neighbor struct {
 	Address string

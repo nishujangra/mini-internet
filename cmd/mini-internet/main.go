@@ -8,6 +8,7 @@ import (
 
 	"github.com/goccy/go-yaml"
 	"github.com/nishujangra/mini-internet/internal/models"
+	"github.com/nishujangra/mini-internet/pkg/neighbor"
 )
 
 func main() {
@@ -34,6 +35,8 @@ func main() {
 		fmt.Printf("Error in starting listner")
 	}
 
+	nmg := neighbor.NewNeighborManager()
+
 	// Accept connections
 	for {
 		conn, err := ln.Accept()
@@ -41,6 +44,8 @@ func main() {
 			log.Printf("accept error: %v", err)
 			continue
 		}
+
+		nmg.Add(conn)
 
 		log.Printf(
 			"neighbor connected from %s",
