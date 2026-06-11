@@ -19,8 +19,3 @@ type Route struct {
 	Protocol      Protocol
 	AdminDistance uint8 // AD, distance from administrative router, useful in multiple routes
 }
-
-// Routing Information Base // Stores all known routes.
-type RIB struct {
-	routes map[netip.Prefix][]Route
-}
