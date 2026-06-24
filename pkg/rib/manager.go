@@ -81,4 +81,16 @@ func (ribmg *RIBManager) Lookup(addr netip.Addr) *models.Route {
 	return best
 }
 
-func (ribmg *RIBManager) List() {}
+// List returns the winning route (lowest AdminDistance) for every known prefix
+func (ribmg *RIBManager) List() []models.Route {
+	ribmg.mu.RLock()
+	defer ribmg.mu.RUnlock()
+
+	var list []models.Route
+
+	for _, routes := range ribmg.routes {
+		list = append(list, routes[0])
+	}
+
+	return list
+}
