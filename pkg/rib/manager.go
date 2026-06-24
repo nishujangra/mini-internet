@@ -18,6 +18,7 @@ func NewRIBManager() *RIBManager {
 	return &RIBManager{routes: make(map[netip.Prefix][]models.Route)}
 }
 
+// You insert a route
 func (ribmg *RIBManager) Insert(route models.Route) {
 	ribmg.mu.Lock()
 	defer ribmg.mu.Unlock()
@@ -39,7 +40,27 @@ func (ribmg *RIBManager) Insert(route models.Route) {
 
 }
 
-func (ribmg *RIBManager) Delete() {}
+// You never delete route, you delete protocol's entry for that prefix
+func (ribmg *RIBManager) Delete(prefix netip.Prefix, protocol models.Protocol) {
+	ribmg.mu.Lock()
+	defer ribmg.mu.Unlock()
+
+	existing := ribmg.routes[prefix]
+	for i, r := range existing {
+		if r.Protocol == protocol {
+			existing = append(existing[:i], existing[i+1:]...)
+
+			// if no routes left for this prefix
+			if len(existing) == 0 {
+				delete(ribmg.routes, prefix)
+			} else {
+				ribmg.routes[prefix] = existing
+			}
+
+			return
+		}
+	}
+}
 
 func (ribmg *RIBManager) Lookup() {}
 
