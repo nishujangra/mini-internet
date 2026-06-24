@@ -62,6 +62,23 @@ func (ribmg *RIBManager) Delete(prefix netip.Prefix, protocol models.Protocol) {
 	}
 }
 
-func (ribmg *RIBManager) Lookup() {}
+// Lookup is based on ip addr and return route
+func (ribmg *RIBManager) Lookup(addr netip.Addr) *models.Route {
+	ribmg.mu.RLock()
+	defer ribmg.mu.RUnlock()
+
+	var best *models.Route
+	bestBits := -1
+
+	for prefix, routes := range ribmg.routes {
+		if prefix.Contains(addr) && prefix.Bits() > bestBits {
+			bestBits = prefix.Bits()
+			r := routes[0]
+			best = &r
+		}
+	}
+
+	return best
+}
 
 func (ribmg *RIBManager) List() {}
