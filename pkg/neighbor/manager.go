@@ -30,6 +30,6 @@ func (nmg *NeighborManager) Add(conn net.Conn) {
 
 func (nmg *NeighborManager) Remove() {}
 
-func (nmg *NeighborManager) Get() {}
+func (nmg *NeighborManager) Lookup() {}
 
 func (nmg *NeighborManager) List() {}
